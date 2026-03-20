@@ -1,6 +1,9 @@
 "use client";
 
+import { ArrowRight } from "lucide-react";
 import React, { useState } from "react";
+
+import ShimmerButton from "@/components/ui/shimmer-button";
 
 // --- Data type for the image accordion ---
 export interface AccordionItemData {
@@ -101,9 +104,15 @@ export interface LandingAccordionItemProps {
   items?: AccordionItemData[];
   /** Initial active index (0-based, default: 4) */
   defaultActiveIndex?: number;
-  /** Title text */
+  /**
+   * 若传入则左侧显示该图片；不传或空字符串则显示文字标题（「知识图谱」行为 md:text-[94px] font-normal）
+   */
+  heroImageSrc?: string | null;
+  /** 标题图无障碍说明 */
+  heroImageAlt?: string;
+  /** 文字标题模式：主标题 */
   title?: string;
-  /** Description text */
+  /** 文字标题模式：副标题 */
   description?: string;
   /** Contact link href */
   contactHref?: string;
@@ -112,6 +121,8 @@ export interface LandingAccordionItemProps {
 export function LandingAccordionItem({
   items = accordionItems,
   defaultActiveIndex = 0,
+  heroImageSrc = "/text.png",
+  heroImageAlt = "中国人物画知识图谱，南京艺术学院 · 美术与书法学院",
   title = "中国人物画知识图谱",
   description = "南京艺术学院 · 美术与书法学院",
   contactHref = "#contact",
@@ -130,34 +141,54 @@ export function LandingAccordionItem({
         <div className="flex flex-col md:flex-row items-center justify-center gap-12">
           {/* Left Side: Text Content */}
           <div className="w-full md:w-1/2 text-left">
-            <h1
-              className="font-bold leading-tight tracking-normal text-4xl md:text-[94px] bg-clip-text text-transparent bg-[length:200%_auto] [animation:var(--animate-gradient-text)]"
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                backgroundImage:
-                  "linear-gradient(90deg, rgba(24, 60, 119, 1) 0%, rgba(11, 16, 86, 1) 50%, rgba(4, 16, 42, 1) 50%, rgba(59, 130, 246, 1) 100%)",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              {title === "中国人物画知识图谱" ? (
-                <>
-                  中国人物画
-                  <br className="hidden md:inline" />
-                  <span className="text-4xl md:text-[81px] font-bold">知识图谱</span>
-                </>
-              ) : (
-                title
-              )}
-            </h1>
-            <p className="mt-6 text-lg text-[rgba(116,123,134,1)] max-w-xl">{description}</p>
+            {heroImageSrc ? (
+              <img
+                src={heroImageSrc}
+                alt={heroImageAlt}
+                className="w-full max-w-xl h-auto"
+                draggable={false}
+              />
+            ) : (
+              <>
+                <h1
+                  className="font-bold leading-tight tracking-normal text-4xl md:text-[94px] bg-clip-text text-transparent bg-[length:200%_auto] [animation:var(--animate-gradient-text)]"
+                  style={{
+                    fontFamily: "var(--font-geist-sans)",
+                    backgroundImage:
+                      "linear-gradient(90deg, rgba(24, 60, 119, 1) 0%, rgba(11, 16, 86, 1) 50%, rgba(4, 16, 42, 1) 50%, rgba(59, 130, 246, 1) 100%)",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {title === "中国人物画知识图谱" ? (
+                    <>
+                      中国人物画
+                      <br className="hidden md:inline" />
+                      <span className="text-4xl md:text-[94px] font-normal">
+                        知识图谱
+                      </span>
+                    </>
+                  ) : (
+                    title
+                  )}
+                </h1>
+                <p className="mt-6 text-lg text-[rgba(116,123,134,1)] max-w-xl">
+                  {description}
+                </p>
+              </>
+            )}
             <div className="mt-8">
-              <a
+              <ShimmerButton
                 href={contactHref}
-                className="inline-block min-w-[124px] text-center text-[18px] bg-gray-900 text-white font-semibold px-[19px] py-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors duration-300"
+                className="h-auto min-h-0 min-w-[124px] gap-2 rounded-[6px] border border-blue-600 bg-[linear-gradient(110deg,transparent,45%,rgba(59,130,246,0.16),55%,transparent)] px-5 py-3 text-center text-[18px] font-serif font-medium text-blue-600 duration-300 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 dark:border-blue-400 dark:bg-[linear-gradient(110deg,transparent,45%,rgba(96,165,250,0.14),55%,transparent)] dark:text-blue-400 dark:hover:border-blue-300 dark:hover:bg-blue-950/30 dark:hover:text-blue-300 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-zinc-900"
               >
                 Enter
-              </a>
+                <ArrowRight
+                  className="size-[1.125rem] shrink-0"
+                  strokeWidth={2}
+                  aria-hidden
+                />
+              </ShimmerButton>
             </div>
           </div>
 
