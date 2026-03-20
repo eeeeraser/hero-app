@@ -145,7 +145,7 @@ export function LandingAccordionItem({
               <img
                 src={heroImageSrc}
                 alt={heroImageAlt}
-                className="w-full max-w-xl h-auto"
+                className="w-full max-w-[34rem] h-auto -translate-x-[12px]"
                 draggable={false}
               />
             ) : (
