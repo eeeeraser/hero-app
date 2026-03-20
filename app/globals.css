@@ -6,6 +6,16 @@
 
 @theme inline {
   --animate-aurora: aurora 60s linear infinite;
+  --animate-gradient-text: gradient-text 4s linear infinite;
+
+  @keyframes gradient-text {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 
   @keyframes aurora {
     from {

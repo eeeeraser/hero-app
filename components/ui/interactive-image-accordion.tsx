@@ -113,7 +113,7 @@ export function LandingAccordionItem({
   items = accordionItems,
   defaultActiveIndex = 0,
   title = "中国人物画知识图谱",
-  description = "Build high-performance AI apps on-device without the hassle of model compression or edge deployment.",
+  description = "南京艺术学院 · 美术与书法学院",
   contactHref = "#contact",
 }: LandingAccordionItemProps) {
   const [activeIndex, setActiveIndex] = useState(
@@ -131,29 +131,32 @@ export function LandingAccordionItem({
           {/* Left Side: Text Content */}
           <div className="w-full md:w-1/2 text-left">
             <h1
-              className="font-bold leading-tight tracking-normal text-4xl md:text-[94px]"
+              className="font-bold leading-tight tracking-normal text-4xl md:text-[94px] bg-clip-text text-transparent bg-[length:200%_auto] [animation:var(--animate-gradient-text)]"
               style={{
                 fontFamily: "var(--font-geist-sans)",
-                color: "rgba(16, 24, 40, 1)",
+                backgroundImage:
+                  "linear-gradient(90deg, rgba(24, 60, 119, 1) 0%, rgba(11, 16, 86, 1) 50%, rgba(4, 16, 42, 1) 50%, rgba(59, 130, 246, 1) 100%)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
               }}
             >
               {title === "中国人物画知识图谱" ? (
                 <>
                   中国人物画
                   <br className="hidden md:inline" />
-                  知识图谱
+                  <span className="text-4xl md:text-[81px] font-bold">知识图谱</span>
                 </>
               ) : (
                 title
               )}
             </h1>
-            <p className="mt-6 text-lg text-gray-600 max-w-xl">{description}</p>
+            <p className="mt-6 text-lg text-[rgba(116,123,134,1)] max-w-xl">{description}</p>
             <div className="mt-8">
               <a
                 href={contactHref}
-                className="inline-block bg-gray-900 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors duration-300"
+                className="inline-block min-w-[124px] text-center text-[18px] bg-gray-900 text-white font-semibold px-[19px] py-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors duration-300"
               >
-                Contact Us
+                Enter
               </a>
             </div>
           </div>
