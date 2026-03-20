@@ -1,0 +1,4 @@
+# Netlify 配置 - Next.js 项目
+# Netlify 会自动检测 Next.js 并配置构建
+[build]
+  command = "npm run build"
