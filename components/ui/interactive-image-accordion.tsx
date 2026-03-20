@@ -21,7 +21,7 @@ const accordionItems: AccordionItemData[] = [
     id: 2,
     title: "AI Image Generation",
     imageUrl:
-      "https://images.unsplash.com/photo-1686191128892-c4dfc0f6e0e0?w=400&h=450&fit=crop",
+      "https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=400&h=450&fit=crop",
   },
   {
     id: 3,
