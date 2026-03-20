@@ -145,7 +145,7 @@ export function LandingAccordionItem({
               <img
                 src={heroImageSrc}
                 alt={heroImageAlt}
-                className="w-full max-w-[34rem] h-auto -translate-x-[12px]"
+                className="w-full max-w-[33rem] h-auto -translate-x-[12px]"
                 draggable={false}
               />
             ) : (
@@ -180,7 +180,7 @@ export function LandingAccordionItem({
             <div className="mt-8">
               <ShimmerButton
                 href={contactHref}
-                className="h-auto min-h-0 min-w-[124px] gap-2 rounded-[6px] border border-blue-600 bg-[linear-gradient(110deg,transparent,45%,rgba(59,130,246,0.16),55%,transparent)] px-5 py-3 text-center text-[18px] font-serif font-medium text-blue-600 duration-300 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 dark:border-blue-400 dark:bg-[linear-gradient(110deg,transparent,45%,rgba(96,165,250,0.14),55%,transparent)] dark:text-blue-400 dark:hover:border-blue-300 dark:hover:bg-blue-950/30 dark:hover:text-blue-300 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-zinc-900"
+                className="-translate-x-[4px] h-auto min-h-0 min-w-[124px] gap-2 rounded-[6px] border border-blue-600 bg-[linear-gradient(110deg,transparent,45%,rgba(59,130,246,0.16),55%,transparent)] px-5 py-3 text-center text-[18px] font-serif font-medium text-blue-600 duration-300 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 dark:border-blue-400 dark:bg-[linear-gradient(110deg,transparent,45%,rgba(96,165,250,0.14),55%,transparent)] dark:text-blue-400 dark:hover:border-blue-300 dark:hover:bg-blue-950/30 dark:hover:text-blue-300 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-zinc-900"
               >
                 Enter
                 <ArrowRight
