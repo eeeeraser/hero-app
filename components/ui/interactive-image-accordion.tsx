@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import React, { useState } from "react";
 
 import ShimmerButton from "@/components/ui/shimmer-button";
@@ -12,37 +13,38 @@ export interface AccordionItemData {
   imageUrl: string;
 }
 
-// --- Data for the image accordion（5 张卡片均使用 Unsplash 网络图片）---
+// --- Data for the image accordion（6 张卡片对应 public/1.jpg … 6.jpg）---
+// 1.jpg / 2.jpg 已统一为相同像素尺寸（800×986），避免同框下缩放观感不一致
 const accordionItems: AccordionItemData[] = [
   {
     id: 1,
     title: "Voice Assistant",
-    imageUrl:
-      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=450&fit=crop",
+    imageUrl: "/1.jpg",
   },
   {
     id: 2,
     title: "AI Image Generation",
-    imageUrl:
-      "https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=400&h=450&fit=crop",
+    imageUrl: "/2.jpg",
   },
   {
     id: 3,
     title: "AI Chatbot + Local RAG",
-    imageUrl:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=450&fit=crop",
+    imageUrl: "/3.jpg",
   },
   {
     id: 4,
     title: "AI Agent",
-    imageUrl:
-      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=450&fit=crop",
+    imageUrl: "/4.jpg",
   },
   {
     id: 5,
     title: "Visual Understanding",
-    imageUrl:
-      "https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=450&fit=crop",
+    imageUrl: "/5.jpg",
+  },
+  {
+    id: 6,
+    title: "Digital Heritage",
+    imageUrl: "/6.jpg",
   },
 ];
 
@@ -59,31 +61,30 @@ const AccordionItem = ({
   return (
     <div
       className={`
-        relative h-[450px] rounded-2xl overflow-hidden cursor-pointer
-        transition-all duration-700 ease-in-out
+        relative h-[474px] rounded-2xl overflow-hidden cursor-pointer
+        transition-[width] duration-700 ease-in-out
         ${isActive ? "w-[400px]" : "w-[60px]"}
       `}
       onMouseEnter={onMouseEnter}
     >
-      {/* Background Image */}
-      <img
-        src={item.imageUrl}
-        alt={item.title}
-        className="absolute inset-0 w-full h-full object-cover"
-        onError={(e) => {
-          const target = e.currentTarget;
-          target.onerror = null;
-          target.src =
-            "https://placehold.co/400x450/2d3748/ffffff?text=Image+Error";
-        }}
-      />
-      {/* 浅色遮罩，保证底部文字可读 */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* 固定 400×474；object-cover 铺满无黑边。第 4–6 张 object-top 保头顶；第 3 张 object-center 上下均衡裁切，顶底都少丢 */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-[400px]">
+        <Image
+          src={item.imageUrl}
+          alt={item.title}
+          fill
+          sizes="400px"
+          quality={75}
+          priority={isActive}
+          draggable={false}
+          className={`object-cover select-none ${[4, 5, 6].includes(item.id) ? "object-top" : "object-center"} ${item.id === 3 ? "-translate-x-[15px]" : ""} ${item.id === 5 ? "-translate-x-[26px]" : ""}`}
+        />
+      </div>
 
       {/* Caption Text */}
       <span
         className={`
-          absolute text-white text-lg font-semibold whitespace-nowrap
+          absolute z-10 text-white text-lg font-semibold whitespace-nowrap
           transition-all duration-300 ease-in-out
           ${
             isActive
