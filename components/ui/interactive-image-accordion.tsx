@@ -14,7 +14,7 @@ export interface AccordionItemData {
 }
 
 // --- Data for the image accordion（6 张卡片对应 public/1.jpg … 6.jpg）---
-// 1.jpg / 2.jpg 已统一为相同像素尺寸（800×986），避免同框下缩放观感不一致
+// 第 2、6 位已对调展示内容（原 2↔6）。1.jpg / 2.jpg 像素尺寸一致（800×986）
 const accordionItems: AccordionItemData[] = [
   {
     id: 1,
@@ -23,8 +23,8 @@ const accordionItems: AccordionItemData[] = [
   },
   {
     id: 2,
-    title: "AI Image Generation",
-    imageUrl: "/2.jpg",
+    title: "Digital Heritage",
+    imageUrl: "/6.jpg",
   },
   {
     id: 3,
@@ -43,8 +43,8 @@ const accordionItems: AccordionItemData[] = [
   },
   {
     id: 6,
-    title: "Digital Heritage",
-    imageUrl: "/6.jpg",
+    title: "AI Image Generation",
+    imageUrl: "/2.jpg",
   },
 ];
 
@@ -67,18 +67,36 @@ const AccordionItem = ({
       `}
       onMouseEnter={onMouseEnter}
     >
-      {/* 固定 400×474；object-cover 铺满无黑边。第 4–6 张 object-top 保头顶；第 3 张 object-center 上下均衡裁切，顶底都少丢 */}
+      {/* 固定 400×474；object-cover 铺满无黑边。第 1 张 object-right 恒 -translate-x-20；第 2、4–6 object-top；第 3 object-center；第 3 恒 -translate-x-18；第 5 恒 -translate-x-34（hover 前后不变） */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-[400px]">
-        <Image
-          src={item.imageUrl}
-          alt={item.title}
-          fill
-          sizes="400px"
-          quality={75}
-          priority={isActive}
-          draggable={false}
-          className={`object-cover select-none ${[4, 5, 6].includes(item.id) ? "object-top" : "object-center"} ${item.id === 3 ? "-translate-x-[15px]" : ""} ${item.id === 5 ? "-translate-x-[26px]" : ""}`}
-        />
+        <div
+          className={`relative h-full w-full ${
+            item.id === 1
+              ? "-translate-x-[20px]"
+              : item.id === 3
+                ? "-translate-x-[18px]"
+                : item.id === 5
+                  ? "-translate-x-[34px]"
+                  : ""
+          }`}
+        >
+          <Image
+            src={item.imageUrl}
+            alt={item.title}
+            fill
+            sizes="400px"
+            quality={75}
+            priority={isActive}
+            draggable={false}
+            className={`object-cover select-none ${
+              item.id === 1
+                ? "object-right"
+                : [2, 4, 5, 6].includes(item.id)
+                  ? "object-top"
+                  : "object-center"
+            }`}
+          />
+        </div>
       </div>
 
       {/* Caption Text */}
@@ -139,14 +157,14 @@ export function LandingAccordionItem({
   return (
     <div className="font-sans flex justify-center items-center min-h-full">
       <section className="container mx-auto px-4 py-12 md:py-24">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-          {/* Left Side: Text Content */}
-          <div className="w-full md:w-1/2 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-28 md:items-start">
+          {/* Left Side: 独立栅格列，宽度不受右侧手风琴动效挤压 */}
+          <div className="w-full min-w-0 text-left">
             {heroImageSrc ? (
               <img
                 src={heroImageSrc}
                 alt={heroImageAlt}
-                className="w-full max-w-[33rem] h-auto -translate-x-[12px]"
+                className="w-full max-w-[46rem] h-auto -translate-x-[12px]"
                 draggable={false}
               />
             ) : (
@@ -178,10 +196,14 @@ export function LandingAccordionItem({
                 </p>
               </>
             )}
-            <div className="mt-8">
+            <div className="mt-12">
               <ShimmerButton
                 href={contactHref}
-                className="-translate-x-[4px] h-auto min-h-0 min-w-[124px] gap-2 rounded-[6px] border border-blue-600 bg-[linear-gradient(110deg,transparent,45%,rgba(59,130,246,0.16),55%,transparent)] px-5 py-3 text-center text-[18px] font-serif font-medium text-blue-600 duration-300 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 dark:border-blue-400 dark:bg-[linear-gradient(110deg,transparent,45%,rgba(96,165,250,0.14),55%,transparent)] dark:text-blue-400 dark:hover:border-blue-300 dark:hover:bg-blue-950/30 dark:hover:text-blue-300 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-zinc-900"
+                style={{
+                  fontFamily:
+                    "SF Pro, -apple-system, BlinkMacSystemFont, sans-serif",
+                }}
+                className="-translate-x-[12px] h-auto min-h-0 min-w-[130px] gap-2 rounded-[6px] border border-blue-600 bg-[linear-gradient(110deg,transparent,45%,rgba(59,130,246,0.16),55%,transparent)] px-5 py-3 text-center text-[19px] font-medium text-blue-600 duration-300 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 dark:border-blue-400 dark:bg-[linear-gradient(110deg,transparent,45%,rgba(96,165,250,0.14),55%,transparent)] dark:text-blue-400 dark:hover:border-blue-300 dark:hover:bg-blue-950/30 dark:hover:text-blue-300 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-zinc-900"
               >
                 Enter
                 <ArrowRight
@@ -193,9 +215,9 @@ export function LandingAccordionItem({
             </div>
           </div>
 
-          {/* Right Side: Image Accordion */}
-          <div className="w-full md:w-1/2">
-            <div className="flex flex-row items-center justify-center gap-4 overflow-x-auto p-4">
+          {/* Right Side: Image Accordion（横向滚动在列内，不拉拽左列） */}
+          <div className="w-full min-w-0">
+            <div className="flex flex-row items-center justify-center gap-4 overflow-x-auto overflow-y-visible px-4 pb-4 pt-0">
               {items.map((item, index) => (
                 <AccordionItem
                   key={item.id}
